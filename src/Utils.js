@@ -24,3 +24,7 @@ export const FORM_URL = `${ENDPOINT}/api/v1/recruitment/forms/?node_type=Both`;
 export const SUBMIT_URL = `${ENDPOINT}/api/v1/recruitment/answers/submit/`;
 
 export const USER_URL = `${ENDPOINT}/api/v1/users/current-user`;
+
+export const ClientId = 'pw5ExLyIcOnxF3B0wna1m7qqHlKVvrB2VFHGtyHB';
+
+export const ClientSecret = 'xqsESmmZxlwGokFuqQTigIwF3hyIWykudx6TCKseGeQIVlSApmscBNlugvfEUO7jh1HJUdXQTreYXJ93nayBjX4jlb8Zzxr4sxJXxJFHRQsMncxtoeUZwwNihdzBB039';
