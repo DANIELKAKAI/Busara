@@ -16,7 +16,7 @@ function App(props) {
   };
 
   return (
-    <AuthContext.Provider value={{ authTokens, setAuthTokens: setTokens }}>
+    <AuthContext.Provider value={{ authTokens:'E1yCmIRmK9EO4u7sGTzqOO0qwAYFBM', setAuthTokens: setTokens }}>
       <Router>
         <div>
           <ul>

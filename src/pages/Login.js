@@ -19,7 +19,6 @@ function Login(props) {
   const [username, setusername] = useState("");
   const [password, setPassword] = useState("");
   const { setAuthTokens } = useAuth();
-  const referer = props.location.state.referer || "/";
 
   const postLogin = (e) => {
     e.preventDefault();
@@ -54,7 +53,7 @@ function Login(props) {
   };
 
   if (isLoggedIn) {
-    return <Redirect to={referer} />;
+    return <Redirect to="/" />;
   }
 
   return (
