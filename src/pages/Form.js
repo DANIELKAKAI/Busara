@@ -2,19 +2,12 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FORM_URL } from "../Utils";
 import { useAuth } from "../context/auth";
+import FormPage from "./FormPage";
 
 function Form() {
   const { authTokens } = useAuth();
   const [form, setForm] = useState({
-    pages: [
-      {
-        sections: [
-          {
-            questions: [{}],
-          },
-        ],
-      },
-    ],
+    pages: [],
   });
 
   const getForm = async () => {
@@ -35,60 +28,16 @@ function Form() {
       });
   };
 
-  /* const getInputs = () => {
-    //console.log(form);
-    let inputs = [];
-    form.pages.map((page) => {
-      page.sections.map((section) => {
-        section.questions.map((q) => {
-          inputs.append(in)
-        });
-      });
-    });
-  }; */
+  useEffect(() => {
+    getForm();
+  }, []);
 
   return (
     <div>
-      <h2>Form</h2>
-      <button onClick={() => getForm()}>get form</button>
-      <form>
-        {form.pages.map((page) =>
-          page.sections.map((section) =>
-            section.questions.map((q) => {
-              if (q.widget == "select") {
-                return (
-                  <div>
-                    <font size="3">
-                      <font face="Arial">
-                        {q.column_match}
-                        <br />
-                      </font>
-                    </font>
-
-                    <select value={q.default} id={q.column_match}>
-                      {q.q_options.map((option) => (
-                        <option value={option.id}>{option.name}</option>
-                      ))}
-                    </select>
-                  </div>
-                );
-              }
-
-              return (
-                <div>
-                  <font size="3">
-                    <font face="Arial">
-                      {q.column_match}
-                      <br />
-                    </font>
-                  </font>
-                  <input type={q.type} value={q.default} id={q.column_match} />
-                </div>
-              );
-            })
-          )
-        )}
-      </form>
+      <h2>Forms</h2>
+        {form.pages.map((page) => (
+          <FormPage page={page} />
+        ))}
     </div>
   );
 }
