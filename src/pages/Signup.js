@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { Card, Form, Input, Button } from "../components/AuthForms";
 import { getDeviceType, SIGNUP_URL } from "../Utils";
 
 function Signup() {
@@ -23,64 +22,95 @@ function Signup() {
     axios
       .post(SIGNUP_URL, data)
       .then((response) => {
-        console.log(response);
+        //console.log(response);
+        if (response.status === 200){
+          alert("account created");
+        }
       })
       .catch((error) => {
         console.log(error);
+        alert(error.response.data.Error);
       });
   };
 
   return (
-    <Card>
+    <div className="container">
       <h2>SignUp</h2>
 
-      <Form onSubmit={postData}>
-        <Input
-          type="text"
-          placeholder="Full name"
-          name="full_name"
-          onChange={updateData}
-        />
-        <Input
-          type="text"
-          placeholder="username"
-          name="username"
-          onChange={updateData}
-        />
-        <Input
-          type="email"
-          placeholder="email"
-          name="email"
-          onChange={updateData}
-        />
-        <Input
-          type="text"
-          placeholder="Phone number"
-          name="phone_number"
-          onChange={updateData}
-        />
-        <Input
-          type="text"
-          placeholder="location"
-          name="location"
-          onChange={updateData}
-        />
-        <Input
-          type="password"
-          placeholder="password"
-          name="password1"
-          onChange={updateData}
-        />
-        <Input
-          type="password"
-          placeholder="password again"
-          name="password2"
-          onChange={updateData}
-        />
-        <Button type="submit">SignUp</Button>
-      </Form>
-      <Link to="/login">Already have an account?</Link>
-    </Card>
+      <form onSubmit={postData}>
+        <div className="form-group">
+          <input
+            className="form-control"
+            type="text"
+            placeholder="Full name"
+            name="full_name"
+            onChange={updateData}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <input
+            className="form-control"
+            type="text"
+            placeholder="username"
+            name="username"
+            onChange={updateData}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <input
+            className="form-control"
+            type="email"
+            placeholder="email"
+            name="email"
+            onChange={updateData}
+          />
+        </div>
+        <div className="form-group">
+          <input
+            className="form-control"
+            type="text"
+            placeholder="Phone number"
+            name="phone_number"
+            onChange={updateData}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <input
+            className="form-control"
+            type="text"
+            placeholder="location"
+            name="location"
+            onChange={updateData}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <input
+            className="form-control"
+            type="password"
+            placeholder="password"
+            name="password1"
+            onChange={updateData}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <input
+            className="form-control"
+            type="password"
+            placeholder="password again"
+            name="password2"
+            onChange={updateData}
+            required
+          />
+        </div>
+        <input className="btn btn-primary" value="submit" type="submit" />
+      </form>
+      <Link to="/login">Log In</Link>
+    </div>
   );
 }
 

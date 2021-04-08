@@ -29,8 +29,7 @@ function Home(props) {
   return (
     <div>
       <h2>User Info</h2>
-      <table>
-        <thead />
+      <table className="table table-success table-striped">
         <tbody>
             <tr>
               <td>Full Name</td> <td>{user.name}</td>

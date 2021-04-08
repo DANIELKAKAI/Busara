@@ -1,21 +1,11 @@
 import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import axios from "axios";
-import logoImg from "../img/logo.jpg";
-import {
-  Card,
-  Logo,
-  Form,
-  Input,
-  Button,
-  Error,
-} from "../components/AuthForms";
 import { useAuth } from "../context/auth";
 import { LOGIN_URL, ClientId, ClientSecret } from "../Utils";
 
 function Login(props) {
   const [isLoggedIn, setLoggedIn] = useState(false);
-  const [isError, setIsError] = useState(false);
   const [username, setusername] = useState("");
   const [password, setPassword] = useState("");
   const { setAuthTokens } = useAuth();
@@ -43,12 +33,11 @@ function Login(props) {
         if (result.status === 200) {
           setAuthTokens(result.data.access_token);
           setLoggedIn(true);
-        } else {
-          setIsError(true);
         }
       })
-      .catch((e) => {
-        setIsError(true);
+      .catch((error) => {
+        console.log(error);
+        alert(error.response.data.Error);
       });
   };
 
@@ -57,32 +46,39 @@ function Login(props) {
   }
 
   return (
-    <Card>
-      <Logo src={logoImg} />
-      <Form onSubmit={postLogin}>
-        <Input
-          type="username"
-          value={username}
-          onChange={(e) => {
-            setusername(e.target.value);
-          }}
-          placeholder="email"
-        />
-        <Input
-          type="password"
-          value={password}
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
-          placeholder="password"
-        />
-        <Button type="submit" value="Log In" />
-      </Form>
+    <div className="container">
+      <h2>Log In</h2>
+      <form onSubmit={postLogin}>
+        <div className="form-group">
+          <label >Email:</label>
+          <input
+            type="email"
+            className="form-control"
+            value={username}
+            onChange={(e) => {
+              setusername(e.target.value);
+            }}
+            placeholder="email"
+          />
+        </div>
+        <div className="form-group">
+          <label >Password:</label>
+          <input
+            type="password"
+            className="form-control"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+            placeholder="password"
+          />
+        </div>
+        <div class="form-group">
+          <input type="submit" className="btn btn-primary" value="Log In" />
+        </div>
+      </form>
       <Link to="/signup">Don't have an account?</Link>
-      {isError && (
-        <Error>The username or password provided were incorrect!</Error>
-      )}
-    </Card>
+    </div>
   );
 }
 

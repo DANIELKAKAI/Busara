@@ -16,23 +16,43 @@ function App(props) {
   };
 
   return (
-    <AuthContext.Provider value={{ authTokens:'6UHG40lqpue6Nuaoa9wasEKPE2hcER', setAuthTokens: setTokens }}>
+    <AuthContext.Provider
+      value={{
+        authTokens:authTokens,
+        setAuthTokens: setTokens,
+      }}
+    >
       <Router>
         <div>
-          <ul>
-            <li>
-              <Link to="/">Home Page</Link>
-            </li>
-            <li>
-              <Link to="/admin">Admin Page</Link>
-            </li>
-            <li>
-              <Link to="/form">Forms Page</Link>
-            </li>
-          </ul>
+          <nav className="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <a class="nav-link" href="/">
+                    Home
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/form">
+                    Form
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/signup">
+                    Sign Up
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/login">
+                    Log In
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </nav>
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
-          <Route path="/form" component={Form}/>
+          <PrivateRoute path="/form" component={Form} />
           <PrivateRoute exact path="/" component={Home} />
         </div>
       </Router>

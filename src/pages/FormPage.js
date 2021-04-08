@@ -1,21 +1,27 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { FORM_URL } from "../Utils";
-import { useAuth } from "../context/auth";
+import React, {  useState } from "react";
 
 function FormPage(props) {
-  const { page } = props;
-  const { authTokens } = useAuth();
-  const [metaData, setMetaData] = useState({
+  const { page, addToPayload,index } = props;
+  const [metaData] = useState({
     local_id: 0,
-    survey_id: page.id,
-    start_time: Date.now(),
+    survey_id: `${page.id}`,
+    start_time: "2021-02-03 11:27:37.739 +0300",
+    end_time: "2021-02-03 11:35:16.649 +0300",
+    location: {
+      accuracy: 0,
+      lat: 0,
+      lon: 0,
+    },
   });
   const [data, setData] = useState({});
 
-  const postForm = () => {
-    //e.preventDefault();
-    console.log(data);
+  const createPayload = () => {
+    let ans = [];
+    for (const [key, value] of Object.entries(data)) {
+      ans.push(value);
+    }
+    const payload = { ans: ans, ...metaData };
+    addToPayload(payload,index);
   };
 
   const updateData = (e) => {
@@ -25,36 +31,40 @@ function FormPage(props) {
 
     if (e.target.type == "checkbox") {
       if (e.target.checked) {
-        setData({...data,[e.target.dataset.index]:{ column_match, q_ans, q_id }});
+        setData({
+          ...data,
+          [e.target.dataset.index]: { column_match, q_ans, q_id },
+        });
       }
-      return true;
+    } else {
+      setData({
+        ...data,
+        [e.target.dataset.index]: { column_match, q_ans, q_id },
+      });
     }
-    setData({...data,[e.target.dataset.index]:{ column_match, q_ans, q_id }});
-    console.log(data);
+    createPayload();
   };
-
 
   return (
     <div>
       <h2>{page.description}</h2>
       <form>
         {page.sections.map((section) =>
-          section.questions.map((q,index) => (
+          section.questions.map((q, index) => (
             <Input updateData={updateData} q={q} index={index} />
           ))
         )}
       </form>
-      <button onClick={(e) => postForm()}>submit</button>
     </div>
   );
 }
 
 function Input(props) {
-  const { q, updateData,index } = props;
+  const { q, updateData, index } = props;
 
   if (q.widget === "select") {
     return (
-      <div>
+      <div className="form-group">
         <font size="3">
           <font face="Arial">
             {q.column_match}
@@ -62,7 +72,13 @@ function Input(props) {
           </font>
         </font>
 
-        <select id={q.id} name={q.column_match} data-index={index} onChange={updateData}>
+        <select
+          id={q.id}
+          name={q.column_match}
+          data-index={index}
+          onChange={updateData}
+          className="form-control"
+        >
           <option disabled selected value>
             {" "}
             -- select an option --{" "}
@@ -79,7 +95,7 @@ function Input(props) {
 
   if (q.widget === "multiselect") {
     return (
-      <div>
+      <div className="form-group">
         <font size="3">
           <font face="Arial">
             {q.column_match}
@@ -87,7 +103,7 @@ function Input(props) {
           </font>
         </font>
 
-        {q.q_options.map((option) => (
+        {q.q_options.map((option, index) => (
           <div key={option.id}>
             <input
               type="checkbox"
@@ -110,7 +126,7 @@ function Input(props) {
   }
 
   return (
-    <div>
+    <div className="form-group">
       <font size="3">
         <font face="Arial">
           {q.column_match}
@@ -118,6 +134,7 @@ function Input(props) {
         </font>
       </font>
       <input
+        className="form-control"
         type={q.type}
         id={q.id}
         max={q.field_length}
