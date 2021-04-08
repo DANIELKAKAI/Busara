@@ -66,7 +66,7 @@ function Form(props) {
 
   useEffect(() => {
     getForm();
-  }, []);
+  });
 
   return (
     <div className="container">

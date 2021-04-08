@@ -32,8 +32,8 @@ function FormPage(props) {
 
   const createPayload = () => {
     let ans = [];
-    for (const [key, value] of Object.entries(data)) {
-      ans.push(value);
+    for (const item of Object.entries(data)) {
+      ans.push(item[1]);
     }
     const payload = { ans: ans, ...metaData };
     addToPayload(payload, index);
@@ -62,7 +62,7 @@ function FormPage(props) {
 
   useEffect(() => {
     setLocationandTime();
-  }, []);
+  });
 
   return (
     <div>
@@ -70,7 +70,7 @@ function FormPage(props) {
       <form>
         {page.sections.map((section) =>
           section.questions.map((q, index) => (
-            <Input updateData={updateData} q={q} index={index} />
+            <Input updateData={updateData} q={q} index={index} key={index} />
           ))
         )}
       </form>
@@ -141,7 +141,7 @@ function Input(props) {
   }
 
   if (q.widget === "article-image") {
-    return <img src={q.description} alt="article image" width="300px" height="300px" />;
+    return <img src={q.description} alt="" width="300px" height="300px" />;
   }
 
   return (
