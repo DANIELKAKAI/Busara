@@ -10,7 +10,6 @@ function Form(props) {
   });
   const [payload, setPayload] = useState([]);
   const [authToken] = useContext(AuthContext);
-  const [endTime, setEndTime] = useState();
 
   const addToPayload = (data, index) => {
     let _payload = payload;
@@ -19,7 +18,7 @@ function Form(props) {
   };
 
   const getForm = () => {
-   axios
+    axios
       .get(FORM_URL, {
         headers: {
           Authorization: `Bearer ${
@@ -41,11 +40,9 @@ function Form(props) {
     const end = new Date(Date.now());
     let _payload = payload;
 
-    _payload.map((item)=>{
-      item.end_time = end.toISOString();
-    })
+    _payload.map((item) => (item.end_time = end.toISOString()));
 
-   console.log(_payload);
+    console.log(_payload);
 
     axios
       .post(SUBMIT_URL, JSON.stringify(_payload), {

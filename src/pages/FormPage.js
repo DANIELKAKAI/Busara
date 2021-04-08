@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 function FormPage(props) {
   const { page, addToPayload, index } = props;
   const [metaData, setMetaData] = useState({
-    local_id: 0,
+    local_id: 2057,
     survey_id: `${page.id}`,
     start_time: "2021-02-03 11:27:37.739 +0300",
     end_time: "2021-02-03 11:35:16.649 +0300",
@@ -141,7 +141,7 @@ function Input(props) {
   }
 
   if (q.widget === "article-image") {
-    return <img src={q.description} alt="article image" />;
+    return <img src={q.description} alt="article image" width="300px" height="300px" />;
   }
 
   return (
