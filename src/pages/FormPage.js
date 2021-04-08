@@ -1,8 +1,8 @@
-import React, {  useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function FormPage(props) {
-  const { page, addToPayload,index } = props;
-  const [metaData] = useState({
+  const { page, addToPayload, index } = props;
+  const [metaData, setMetaData] = useState({
     local_id: 0,
     survey_id: `${page.id}`,
     start_time: "2021-02-03 11:27:37.739 +0300",
@@ -15,13 +15,28 @@ function FormPage(props) {
   });
   const [data, setData] = useState({});
 
+  const setLocationandTime = async () => {
+    const start = new Date(Date.now());
+    await navigator.geolocation.getCurrentPosition((position) => {
+      setMetaData({
+        ...metaData,
+        location: {
+          accuracy: position.coords.accuracy,
+          lat: position.coords.latitude,
+          lon: position.coords.longitude,
+        },
+        start_time:start.toISOString()
+      });
+    });
+  };
+
   const createPayload = () => {
     let ans = [];
     for (const [key, value] of Object.entries(data)) {
       ans.push(value);
     }
     const payload = { ans: ans, ...metaData };
-    addToPayload(payload,index);
+    addToPayload(payload, index);
   };
 
   const updateData = (e) => {
@@ -29,7 +44,7 @@ function FormPage(props) {
     const q_ans = e.target.value;
     const q_id = e.target.id;
 
-    if (e.target.type == "checkbox") {
+    if (e.target.type === "checkbox") {
       if (e.target.checked) {
         setData({
           ...data,
@@ -45,9 +60,13 @@ function FormPage(props) {
     createPayload();
   };
 
+  useEffect(() => {
+    setLocationandTime();
+  }, []);
+
   return (
     <div>
-      <h2>{page.description}</h2>
+      <h2>Form {index + 1}</h2>
       <form>
         {page.sections.map((section) =>
           section.questions.map((q, index) => (
@@ -122,7 +141,7 @@ function Input(props) {
   }
 
   if (q.widget === "article-image") {
-    return <img src={q.description} />;
+    return <img src={q.description} alt="article image" />;
   }
 
   return (

@@ -1,14 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import axios from "axios";
-import { useAuth } from "../context/auth";
+import { AuthContext } from "../context/auth";
 import { LOGIN_URL, ClientId, ClientSecret } from "../Utils";
 
 function Login(props) {
-  const [isLoggedIn, setLoggedIn] = useState(false);
   const [username, setusername] = useState("");
   const [password, setPassword] = useState("");
-  const { setAuthTokens } = useAuth();
+  const [authToken, setAuthToken] = useContext(AuthContext);
 
   const postLogin = (e) => {
     e.preventDefault();
@@ -31,17 +30,17 @@ function Login(props) {
       .then((result) => {
         console.log(result);
         if (result.status === 200) {
-          setAuthTokens(result.data.access_token);
-          setLoggedIn(true);
+          setAuthToken(result.data.access_token);
+          localStorage.setItem('authToken', result.data.access_token);
         }
       })
       .catch((error) => {
-        console.log(error);
-        alert(error.response.data.Error);
+        //console.log(error.response);
+        alert(error.response.data.error);
       });
   };
 
-  if (isLoggedIn) {
+  if (authToken) {
     return <Redirect to="/" />;
   }
 

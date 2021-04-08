@@ -1,27 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { FORM_URL, SUBMIT_URL } from "../Utils";
-import { useAuth } from "../context/auth";
 import FormPage from "./FormPage";
+import { AuthContext } from "../context/auth";
 
 function Form(props) {
-  const { authTokens } = useAuth();
   const [form, setForm] = useState({
     pages: [],
   });
   const [payload, setPayload] = useState([]);
+  const [authToken] = useContext(AuthContext);
+  const [endTime, setEndTime] = useState();
 
-  const addToPayload = (data,index) => {
+  const addToPayload = (data, index) => {
     let _payload = payload;
-    _payload[index]= data
+    _payload[index] = data;
     setPayload(_payload);
   };
 
-  const getForm = async () => {
-    await axios
+  const getForm = () => {
+   axios
       .get(FORM_URL, {
         headers: {
-          Authorization: `Bearer ${authTokens}`,
+          Authorization: `Bearer ${
+            authToken || localStorage.getItem("authToken")
+          }`,
         },
       })
       .then((response) => {
@@ -35,11 +38,21 @@ function Form(props) {
   };
 
   const postForm = () => {
-    console.log(payload);
+    const end = new Date(Date.now());
+    let _payload = payload;
+
+    _payload.map((item)=>{
+      item.end_time = end.toISOString();
+    })
+
+   console.log(_payload);
+
     axios
-      .post(SUBMIT_URL, JSON.stringify(payload), {
+      .post(SUBMIT_URL, JSON.stringify(_payload), {
         headers: {
-          Authorization: `Bearer ${authTokens}`,
+          Authorization: `Bearer ${
+            authToken || localStorage.getItem("authToken")
+          }`,
         },
       })
       .then((response) => {
@@ -60,10 +73,10 @@ function Form(props) {
 
   return (
     <div className="container">
-      <h2>Forms</h2>
-      {form.pages.map((page,index) => (
+      {form.pages.map((page, index) => (
         <FormPage page={page} addToPayload={addToPayload} index={index} />
       ))}
+      <br />
       <button className="btn btn-primary" onClick={(e) => postForm()}>
         submit
       </button>
