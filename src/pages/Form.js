@@ -33,6 +33,9 @@ function Form(props) {
       })
       .catch((error) => {
         console.log(error);
+        if (error.response.status === 401) {
+          alert("Unauthorized log in");
+        }
       });
   };
 
@@ -50,6 +53,7 @@ function Form(props) {
           Authorization: `Bearer ${
             authToken || localStorage.getItem("authToken")
           }`,
+          "Content-Type": "application/json",
         },
       })
       .then((response) => {
@@ -60,7 +64,7 @@ function Form(props) {
       })
       .catch((error) => {
         console.log(error.response);
-        alert(error.response.data.Error);
+        alert("status: " + error.response.status);
       });
   };
 

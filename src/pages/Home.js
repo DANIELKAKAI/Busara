@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { USER_URL } from "../Utils";
-import { AuthContext } from '../context/auth';
+import { AuthContext } from "../context/auth";
 
 function Home(props) {
   const [user, setUser] = useState({});
@@ -11,7 +11,9 @@ function Home(props) {
     axios
       .get(USER_URL, {
         headers: {
-          Authorization: `Bearer ${authToken || localStorage.getItem('authToken')}`,
+          Authorization: `Bearer ${
+            authToken || localStorage.getItem("authToken")
+          }`,
         },
       })
       .then((response) => {
@@ -20,10 +22,11 @@ function Home(props) {
       })
       .catch((error) => {
         console.log(error);
+        if (error.response.status === 401) {
+          alert("Unauthorized log in");
+        }
       });
   });
-
-  
 
   return (
     <div>

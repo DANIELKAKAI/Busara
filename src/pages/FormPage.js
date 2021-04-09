@@ -25,7 +25,7 @@ function FormPage(props) {
           lat: position.coords.latitude,
           lon: position.coords.longitude,
         },
-        start_time:start.toISOString()
+        start_time: start.toISOString(),
       });
     });
   };
@@ -43,18 +43,25 @@ function FormPage(props) {
     const column_match = e.target.name;
     const q_ans = e.target.value;
     const q_id = e.target.id;
+    const index = e.target.dataset.index;
 
     if (e.target.type === "checkbox") {
       if (e.target.checked) {
+        console.log(data);
+        const checkbox = data[index];
         setData({
           ...data,
-          [e.target.dataset.index]: { column_match, q_ans, q_id },
+          [index]: {
+            column_match,
+            q_ans: checkbox ? [...checkbox.q_ans, q_ans] : [q_ans],
+            q_id,
+          },
         });
       }
     } else {
       setData({
         ...data,
-        [e.target.dataset.index]: { column_match, q_ans, q_id },
+        [index]: { column_match, q_ans, q_id },
       });
     }
     createPayload();
@@ -122,7 +129,7 @@ function Input(props) {
           </font>
         </font>
 
-        {q.q_options.map((option, index) => (
+        {q.q_options.map((option) => (
           <div key={option.id}>
             <input
               type="checkbox"
