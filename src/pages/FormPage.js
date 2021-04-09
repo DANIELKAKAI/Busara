@@ -4,7 +4,7 @@ function FormPage(props) {
   const { page, addToPayload, index } = props;
   const [metaData, setMetaData] = useState({
     local_id: 2057,
-    survey_id: `${page.id}`,
+    survey_id: page.id,
     start_time: "",
     end_time: "",
     location: {
@@ -46,13 +46,22 @@ function FormPage(props) {
     const index = e.target.dataset.index;
 
     if (e.target.type === "checkbox") {
+      const checkbox = data[index];
       if (e.target.checked) {
-        const checkbox = data[index];
         setData({
           ...data,
           [index]: {
             column_match,
             q_ans: checkbox ? [...checkbox.q_ans, q_ans] : [q_ans],
+            q_id,
+          },
+        });
+      } else {
+        setData({
+          ...data,
+          [index]: {
+            column_match,
+            q_ans: [...checkbox.q_ans.filter((q) => q !== q_ans)],
             q_id,
           },
         });
