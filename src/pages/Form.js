@@ -40,9 +40,10 @@ function Form(props) {
   };
 
   const postForm = () => {
-    const end = new Date(Date.now());
     let _payload = payload;
 
+    //set survey end time
+    const end = new Date(Date.now());
     _payload.map((item) => (item.end_time = end.toISOString()));
 
     console.log(_payload);
