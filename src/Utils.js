@@ -25,6 +25,6 @@ export const SUBMIT_URL = `${ENDPOINT}/api/v1/recruitment/answers/submit/`;
 
 export const USER_URL = `${ENDPOINT}/api/v1/users/current-user`;
 
-export const ClientId = 'pw5ExLyIcOnxF3B0wna1m7qqHlKVvrB2VFHGtyHB';
+export const ClientId = process.env.CLIENTID || 'pw5ExLyIcOnxF3B0wna1m7qqHlKVvrB2VFHGtyHB';
 
-export const ClientSecret = 'xqsESmmZxlwGokFuqQTigIwF3hyIWykudx6TCKseGeQIVlSApmscBNlugvfEUO7jh1HJUdXQTreYXJ93nayBjX4jlb8Zzxr4sxJXxJFHRQsMncxtoeUZwwNihdzBB039';
+export const ClientSecret = process.env.CLIENTSECRET || 'xqsESmmZxlwGokFuqQTigIwF3hyIWykudx6TCKseGeQIVlSApmscBNlugvfEUO7jh1HJUdXQTreYXJ93nayBjX4jlb8Zzxr4sxJXxJFHRQsMncxtoeUZwwNihdzBB039';
