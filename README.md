@@ -11,6 +11,7 @@ A simple frontend for using:
 clone the repository then run the following commands:
 
 ```
+$ git clone https://github.com/DANIELKAKAI/Busara.git
 $ cd Busara  
 $ npm install
 $ npm start
