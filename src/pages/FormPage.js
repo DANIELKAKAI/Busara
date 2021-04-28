@@ -120,14 +120,10 @@ function Input(props) {
           id={q.id}
           name={q.column_match}
           data-index={index}
-          onChange={updateData}
-          
+          onChange={updateData}       
           style={{marginBottom:20}}
+          defaultValue=""
         >
-          <option disabled selected value>
-            {" "}
-            -- select an option --{" "}
-          </option>
           {q.q_options.map((option) => (
             <option key={option.id} value={option.id}>
               {option.name}

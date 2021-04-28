@@ -12,7 +12,7 @@ function App(props) {
   return (
     <AuthProvider>
       <Router>
-        <div className="container">
+        <div className="container bg-light">
           <nav className="navbar navbar-expand-lg navbar-light bg-primary">
           <a className="navbar-brand nav-link" href="/">BUSARA</a>
             <div

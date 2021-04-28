@@ -7,13 +7,13 @@ function Signup() {
   const initialData = {
     referral_code: "",
     device_details: { device: getDeviceType() },
-    full_name:"",
-    username:"",
-    email:"",
-    phone_number:"",
-    location:"",
-    password1:"",
-    password2:""
+    full_name: "",
+    username: "",
+    email: "",
+    phone_number: "",
+    location: "",
+    password1: "",
+    password2: "",
   };
 
   const [data, setData] = useState(initialData);
@@ -22,13 +22,14 @@ function Signup() {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
-  const postData = () => { 
+  const postData = (e) => {
+    e.preventDefault();
+    console.log(data);
     axios
       .post(SIGNUP_URL, data)
       .then((response) => {
-        //console.log(response);
-        if (response.status === 200) {
-          alert("account created");
+        if (response.status === 201) {
+          alert("account created: " + JSON.stringify(response.data));
         }
       })
       .catch((error) => {
@@ -48,7 +49,7 @@ function Signup() {
                   <i className="fa fa-user"></i>
                 </span>
               </div>
-              <div   className="form-horizontal">
+              <form onSubmit={postData} className="form-horizontal">
                 <h3 className="title">Sign UP</h3>
                 <div className="form-group">
                   <input
@@ -127,12 +128,9 @@ function Signup() {
                   />
                 </div>
                 <div className="form-group">
-                <button
-                  className="btn submit"
-                  onClick={postData}
-                > submit</button>
+                  <input type="submit" value="submit" className="btn submit" />
                 </div>
-              </div>
+              </form>
               <Link to="/login">Log In</Link>
             </div>
           </div>
