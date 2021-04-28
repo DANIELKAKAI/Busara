@@ -80,15 +80,25 @@ function FormPage(props) {
   });
 
   return (
-    <div>
-      <h2>Form {index + 1}</h2>
-      <form>
-        {page.sections.map((section) =>
-          section.questions.map((q, index) => (
-            <Input updateData={updateData} q={q} index={index} key={index} />
-          ))
-        )}
-      </form>
+    <div className="form-bg">
+      <div className="container">
+        <div className="row justify-content-center">
+          <div className="col-md-offset-3 col-md-6 col-sm-offset-2 col-sm-8">
+            <form className="form2-horizontal row ">
+              {page.sections.map((section) =>
+                section.questions.map((q, index) => (
+                  <Input
+                    updateData={updateData}
+                    q={q}
+                    index={index}
+                    key={index}
+                  />
+                ))
+              )}
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -111,7 +121,8 @@ function Input(props) {
           name={q.column_match}
           data-index={index}
           onChange={updateData}
-          className="form-control"
+          
+          style={{marginBottom:20}}
         >
           <option disabled selected value>
             {" "}
@@ -147,7 +158,7 @@ function Input(props) {
               onChange={updateData}
               data-index={index}
             />
-            <label>{option.name}</label>
+            <label className="text-center">{option.name}</label>
             <br />
           </div>
         ))}
@@ -156,7 +167,11 @@ function Input(props) {
   }
 
   if (q.widget === "article-image") {
-    return <img src={q.description} alt="" width="300px" height="300px" />;
+    return (
+      <div className="form-group">
+        <img src={q.description} alt="" width="50px" height="50px" />
+      </div>
+    );
   }
 
   return (

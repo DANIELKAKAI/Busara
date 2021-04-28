@@ -74,14 +74,16 @@ function Form(props) {
   });
 
   return (
-    <div className="container">
+    <div className="container bg-light">
       {form.pages.map((page, index) => (
         <FormPage page={page} addToPayload={addToPayload} index={index} />
       ))}
       <br />
-      <button className="btn btn-primary" onClick={(e) => postForm()}>
-        submit
-      </button>
+      <div className="row justify-content-center">
+        <button className="btn btn-primary survey-btn btn-md" onClick={(e) => postForm()}>
+          submit
+        </button>
+      </div>
     </div>
   );
 }

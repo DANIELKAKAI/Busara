@@ -29,27 +29,28 @@ function Home(props) {
   });
 
   return (
-    <div>
-      <h2>User Info</h2>
-      <table className="table table-success table-striped">
-        <tbody>
-          <tr>
-            <td>Full Name</td> <td>{user.name}</td>
-          </tr>
-          <tr>
-            <td>Email</td>
-            <td>{user.email}</td>
-          </tr>
-          <tr>
-            <td>Phone Number</td>
-            <td>{user.phone_number}</td>
-          </tr>
-          <tr>
-            <td>Referral Code</td>
-            <td>{user.referral_code}</td>
-          </tr>
-        </tbody>
-      </table>
+    <div className="container">
+      <div className="row">
+        <table className="table table-success table-striped">
+          <tbody>
+            <tr>
+              <td>Full Name</td> <td>{user.name}</td>
+            </tr>
+            <tr>
+              <td>Email</td>
+              <td>{user.email}</td>
+            </tr>
+            <tr>
+              <td>Phone Number</td>
+              <td>{user.phone_number}</td>
+            </tr>
+            <tr>
+              <td>Referral Code</td>
+              <td>{user.referral_code}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
