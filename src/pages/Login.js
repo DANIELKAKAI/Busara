@@ -30,7 +30,7 @@ function Login(props) {
       .then((result) => {
         console.log(result);
         if (result.status === 200) {
-          setAuthToken(result.data.access_token);
+          setAuthToken((prevToken) => result.data.access_token);
           localStorage.setItem("authToken", result.data.access_token);
         }
       })
